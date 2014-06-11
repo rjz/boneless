@@ -1,7 +1,7 @@
 {
-  "name"          : "backbone",
+  "name"          : "boneless",
   "description"   : "Give your JS App some Backbone with Models, Views, Collections, and Events.",
-  "url"           : "http://backbonejs.org",
+  "url"           : "http://github.com/rjz/boneless.git",
   "keywords"      : ["model", "view", "controller", "router", "server", "client", "browser"],
   "author"        : "Jeremy Ashkenas <jeremy@documentcloud.org>",
   "dependencies"  : {
@@ -14,15 +14,15 @@
   },
   "scripts": {
     "test": "phantomjs test/vendor/runner.js test/index.html?noglobals=true && coffee test/model.coffee",
-    "build": "uglifyjs backbone.js --mangle --source-map backbone-min.map -o backbone-min.js",
-    "doc": "docco backbone.js && docco examples/todos/todos.js examples/backbone.localstorage.js",
-    "lint": "jsl -nofilelisting -nologo -conf docs/jsl.conf -process backbone.js"
+    "build": "uglifyjs boneless.js --mangle --source-map boneless-min.map -o boneless-min.js",
+    "doc": "docco boneless.js && docco examples/todos/todos.js examples/boneless.localstorage.js",
+    "lint": "jsl -nofilelisting -nologo -conf docs/jsl.conf -process boneless.js"
   },
-  "main"          : "backbone.js",
+  "main"          : "boneless.js",
   "version"       : "1.1.2",
   "license"       : "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jashkenas/backbone.git"
+    "url": "https://github.com/rjz/boneless.git"
   }
 }

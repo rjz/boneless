@@ -1,8 +1,8 @@
-# Quick Backbone/CoffeeScript tests to make sure that inheritance
+# Quick Boneless/CoffeeScript tests to make sure that inheritance
 # works correctly.
 
 {ok, equal, deepEqual}      = require 'assert'
-{Model, Collection, Events} = require '../backbone'
+{Model, Collection, Events} = require '../boneless'
 
 
 # Patch `ok` to store a count of passed tests...

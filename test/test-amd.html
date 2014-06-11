@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <title>Backbone Test Suite</title>
+  <title>Boneless Test Suite</title>
   <link rel="stylesheet" href="vendor/qunit.css" type="text/css" media="screen" />
   <script type="text/javascript" src="vendor/json2.js"></script>
   <script type="text/javascript" src="vendor/qunit.js"></script>
@@ -15,21 +15,19 @@
       paths: {
         'jquery': 'vendor/jquery',
         'underscore': 'vendor/underscore',
-        'backbone': '../backbone'
+        'boneless': '../boneless'
       }
     });
 
     var root = this;
 
-    require(['backbone'], function(Backbone) {
+    require(['boneless'], function(Boneless) {
       require([
         'environment',
         'noconflict',
         'events',
         'model',
         'collection',
-        'router',
-        'view',
         'sync'
       ], function() {
         QUnit.start();

@@ -1,26 +1,26 @@
 /**
- * Backbone localStorage Adapter
+ * Boneless localStorage Adapter
  * Version 1.1.0
  *
- * https://github.com/jeromegn/Backbone.localStorage
+ * https://github.com/jeromegn/Boneless.localStorage
  */
 (function (root, factory) {
    if (typeof define === "function" && define.amd) {
       // AMD. Register as an anonymous module.
-      define(["underscore","backbone"], function(_, Backbone) {
+      define(["underscore","boneless"], function(_, Boneless) {
         // Use global variables if the locals are undefined.
-        return factory(_ || root._, Backbone || root.Backbone);
+        return factory(_ || root._, Boneless || root.Boneless);
       });
    } else {
-      // RequireJS isn't being used. Assume underscore and backbone are loaded in <script> tags
-      factory(_, Backbone);
+      // RequireJS isn't being used. Assume underscore and boneless are loaded in <script> tags
+      factory(_, Boneless);
    }
-}(this, function(_, Backbone) {
-// A simple module to replace `Backbone.sync` with *localStorage*-based
+}(this, function(_, Boneless) {
+// A simple module to replace `Boneless.sync` with *localStorage*-based
 // persistence. Models are given GUIDS, and saved into a JSON object. Simple
 // as that.
 
-// Hold reference to Underscore.js and Backbone.js in the closure in order
+// Hold reference to Underscore.js and Boneless.js in the closure in order
 // to make things work even if they are removed from the global namespace
 
 // Generate four random hex digits.
@@ -35,14 +35,14 @@ function guid() {
 
 // Our Store is represented by a single JS object in *localStorage*. Create it
 // with a meaningful name, like the name you'd give a table.
-// window.Store is deprectated, use Backbone.LocalStorage instead
-Backbone.LocalStorage = window.Store = function(name) {
+// window.Store is deprectated, use Boneless.LocalStorage instead
+Boneless.LocalStorage = window.Store = function(name) {
   this.name = name;
   var store = this.localStorage().getItem(this.name);
   this.records = (store && store.split(",")) || [];
 };
 
-_.extend(Backbone.LocalStorage.prototype, {
+_.extend(Boneless.LocalStorage.prototype, {
 
   // Save the current state of the **Store** to *localStorage*.
   save: function() {
@@ -110,8 +110,8 @@ _.extend(Backbone.LocalStorage.prototype, {
 
 // localSync delegate to the model or collection's
 // *localStorage* property, which should be an instance of `Store`.
-// window.Store.sync and Backbone.localSync is deprectated, use Backbone.LocalStorage.sync instead
-Backbone.LocalStorage.sync = window.Store.sync = Backbone.localSync = function(method, model, options) {
+// window.Store.sync and Boneless.localSync is deprectated, use Boneless.LocalStorage.sync instead
+Boneless.LocalStorage.sync = window.Store.sync = Boneless.localSync = function(method, model, options) {
   var store = model.localStorage || model.collection.localStorage;
 
   var resp, errorMessage, syncDfd = $.Deferred && $.Deferred(); //If $ is having Deferred - use it.
@@ -164,21 +164,21 @@ Backbone.LocalStorage.sync = window.Store.sync = Backbone.localSync = function(m
   return syncDfd && syncDfd.promise();
 };
 
-Backbone.ajaxSync = Backbone.sync;
+Boneless.ajaxSync = Boneless.sync;
 
-Backbone.getSyncMethod = function(model) {
+Boneless.getSyncMethod = function(model) {
   if(model.localStorage || (model.collection && model.collection.localStorage)) {
-    return Backbone.localSync;
+    return Boneless.localSync;
   }
 
-  return Backbone.ajaxSync;
+  return Boneless.ajaxSync;
 };
 
-// Override 'Backbone.sync' to default to localSync,
-// the original 'Backbone.sync' is still available in 'Backbone.ajaxSync'
-Backbone.sync = function(method, model, options) {
-  return Backbone.getSyncMethod(model).apply(this, [method, model, options]);
+// Override 'Boneless.sync' to default to localSync,
+// the original 'Boneless.sync' is still available in 'Boneless.ajaxSync'
+Boneless.sync = function(method, model, options) {
+  return Boneless.getSyncMethod(model).apply(this, [method, model, options]);
 };
 
-return Backbone.LocalStorage;
+return Boneless.LocalStorage;
 }));

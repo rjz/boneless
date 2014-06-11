@@ -1,13 +1,13 @@
 {
-  "name"          : "backbone",
+  "name"          : "boneless",
   "version"       : "1.1.2",
   "description"   : "Give your JS App some Backbone with Models, Views, Collections, and Events.",
   "keywords"      : ["model", "view", "controller", "router", "server", "client", "browser"],
-  "repo"          : "jashkenas/backbone",
+  "repo"          : "rjz/boneless",
   "dependencies"  : {
     "jashkenas/underscore"  : "*"
   },
-  "main"          : "backbone.js",
-  "scripts"       : ["backbone.js"],
+  "main"          : "boneless.js",
+  "scripts"       : ["boneless.js"],
   "license"       : "MIT"
 }

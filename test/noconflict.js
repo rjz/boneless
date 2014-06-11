@@ -1,12 +1,12 @@
 (function() {
 
-  module("Backbone.noConflict");
+  module("Boneless.noConflict");
 
   test('noConflict', 2, function() {
-    var noconflictBackbone = Backbone.noConflict();
-    equal(window.Backbone, undefined, 'Returned window.Backbone');
-    window.Backbone = noconflictBackbone;
-    equal(window.Backbone, noconflictBackbone, 'Backbone is still pointing to the original Backbone');
+    var noconflictBoneless = Boneless.noConflict();
+    equal(window.Boneless, undefined, 'Returned window.Boneless');
+    window.Boneless = noconflictBoneless;
+    equal(window.Boneless, noconflictBoneless, 'Boneless is still pointing to the original Boneless');
   });
 
 })();
