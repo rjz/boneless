@@ -12,10 +12,10 @@
 
   // Set up Boneless appropriately for the environment. Start with AMD.
   if (typeof define === 'function' && define.amd) {
-    define(['underscore', 'jquery', 'exports'], function(_, $, exports) {
+    define(['underscore', 'exports'], function(_, exports) {
       // Export global even in AMD case in case this script is loaded with
       // others that may still expect a global Boneless.
-      root.Boneless = factory(root, exports, _, $);
+      root.Boneless = factory(root, exports, _);
     });
 
   // Next for Node.js or CommonJS. jQuery may not be needed as a module.
@@ -25,10 +25,10 @@
 
   // Finally, as a browser global.
   } else {
-    root.Boneless = factory(root, {}, root._, (root.jQuery || root.Zepto || root.ender || root.$));
+    root.Boneless = factory(root, {}, root._);
   }
 
-}(this, function(root, Boneless, _, $) {
+}(this, function(root, Boneless, _) {
 
   // Initial Setup
   // -------------
@@ -43,10 +43,6 @@
 
   // Current version of the library. Keep in sync with `package.json`.
   Boneless.VERSION = '1.1.2';
-
-  // For Boneless's purposes, jQuery, Zepto, Ender, or My Library (kidding) owns
-  // the `$` variable.
-  Boneless.$ = $;
 
   // Runs Boneless.js in *noConflict* mode, returning the `Boneless` variable
   // to its previous owner. Returns a reference to this Boneless object.
@@ -1064,7 +1060,7 @@
   // Set the default implementation of `Boneless.ajax` to proxy through to `$`.
   // Override this if you'd like to use a different library.
   Boneless.ajax = function() {
-    return Boneless.$.ajax.apply(Boneless.$, arguments);
+    // TODO
   };
 
   // Helpers
