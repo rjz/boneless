@@ -18,11 +18,10 @@
     }
   });
 
-  test("read", 4, function() {
+  test("read", 3, function() {
     library.fetch();
     equal(this.ajaxSettings.url, '/library');
     equal(this.ajaxSettings.type, 'GET');
-    equal(this.ajaxSettings.dataType, 'json');
     ok(_.isEmpty(this.ajaxSettings.data));
   });
 
@@ -33,21 +32,19 @@
     equal(this.ajaxSettings.data.one, 1);
   });
 
-  test("create", 6, function() {
+  test("create", 5, function() {
     equal(this.ajaxSettings.url, '/library');
     equal(this.ajaxSettings.type, 'POST');
-    equal(this.ajaxSettings.dataType, 'json');
     var data = JSON.parse(this.ajaxSettings.data);
     equal(data.title, 'The Tempest');
     equal(data.author, 'Bill Shakespeare');
     equal(data.length, 123);
   });
 
-  test("update", 7, function() {
+  test("update", 6, function() {
     library.first().save({id: '1-the-tempest', author: 'William Shakespeare'});
     equal(this.ajaxSettings.url, '/library/1-the-tempest');
     equal(this.ajaxSettings.type, 'PUT');
-    equal(this.ajaxSettings.dataType, 'json');
     var data = JSON.parse(this.ajaxSettings.data);
     equal(data.id, '1-the-tempest');
     equal(data.title, 'The Tempest');
@@ -104,15 +101,14 @@
     this.ajaxSettings.error();
   });
 
-  test('#2928 - Pass along `textStatus` and `errorThrown`.', 2, function() {
+  test('#2928 - Pass along `textStatus`.', 1, function() {
     var model = new Boneless.Model;
     model.url = '/test';
     model.on('error', function(model, xhr, options) {
       strictEqual(options.textStatus, 'textStatus');
-      strictEqual(options.errorThrown, 'errorThrown');
     });
     model.fetch();
-    this.ajaxSettings.error({}, 'textStatus', 'errorThrown');
+    this.ajaxSettings.error({}, 'textStatus');
   });
 
 })();

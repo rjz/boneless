@@ -1010,13 +1010,14 @@
   // * Send up the models as XML instead of JSON.
   // * Persist models via WebSockets instead of Ajax.
   Boneless.sync = function(method, model, options) {
-    var type = methodMap[method];
 
     // Default options, unless specified.
     if (!options) options = {};
 
     // Default JSON-request options.
-    var params = {type: type, dataType: 'json'};
+    var params = {
+      type: methodMap[method]
+    };
 
     // Ensure that we have a URL.
     if (!options.url) {
@@ -1025,7 +1026,6 @@
 
     // Ensure that we have the appropriate request data.
     if (options.data == null && model && (method === 'create' || method === 'update' || method === 'patch')) {
-      params.contentType = 'application/json';
       params.data = JSON.stringify(options.attrs || model.toJSON(options));
     }
 
@@ -1034,11 +1034,10 @@
       params.processData = false;
     }
 
-    // Pass along `textStatus` and `errorThrown` from jQuery.
+    // Pass along `textStatus`
     var error = options.error;
-    options.error = function(xhr, textStatus, errorThrown) {
+    options.error = function(xhr, textStatus) {
       options.textStatus = textStatus;
-      options.errorThrown = errorThrown;
       if (error) error.apply(this, arguments);
     };
 
@@ -1057,10 +1056,67 @@
     'read':   'GET'
   };
 
-  // Set the default implementation of `Boneless.ajax` to proxy through to `$`.
-  // Override this if you'd like to use a different library.
-  Boneless.ajax = function() {
-    // TODO
+  // TODO:
+  Boneless.ajax = function (options) {
+
+    var request = new XMLHttpRequest();
+
+    var unbind = function (req) {
+      req.removeEventListener('load', onLoad);
+      req.removeEventListener('error', onError);
+    };
+
+    var onLoad = function (evt) {
+      var data, req = evt.target;
+
+      unbind(req);
+
+      if (req.status >= 200 && req.status < 400) {
+        try {
+          data = JSON.parse(req.responseText);
+        }
+        catch (e) {
+          if (options.error) {
+            // TODO: more uniform JSON parsing
+            return options.error(req, req.status, e.toString());
+          }
+        }
+
+        if (options.success) {
+          options.success(data, req.status, req);
+        }
+      }
+      else {
+        if (options.error) {
+          // todo: fix `errorStatus` param
+          options.error(req, req.status, req.responseText);
+        }
+      }
+    };
+
+    var onError = function () {
+      var req = evt.target;
+      unbind(req);
+      if (options.error) {
+        options.error(m, {}, req);
+      }
+    };
+
+    request.addEventListener('load', onLoad);
+    request.addEventListener('error', onError);
+
+    if (options.type === 'GET') {
+      // TODO: query paramize `options.data`
+      request.open(options.type, options.url, true);
+      request.setRequestHeader('Accept', 'application/json');
+      request.send();
+    }
+    else {
+      request.open(options.type, options.url, true);
+      request.setRequestHeader('Accept', 'application/json');
+      request.setRequestHeader('Content-type', 'application/json');
+      request.send(options.data);
+    }
   };
 
   // Helpers

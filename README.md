@@ -20,9 +20,13 @@ its other [contributors](http://github.com/jashkenas/backbone/contributors)
 
 ### API Compatibility
 
-Boneless maintains API compatibility with *all* of Backbone's `Event`, `Model`,
-and `Collection` modules. It will soon ship ~~with high-quality implementations
-of `Backbone.sync` for use in both browser- and server-side environments.~~
+Boneless strives to maintain API compatibility with *all* of Backbone's `Event`,
+`Model`, and `Collection` modules, but due to the removal of compatibility code
+and the heavy reliance on ECMA5 extensions and the omission of `jQuery` it should
+not be considered a drop-in replacement.
+
+It ships with independent implementations of `Backbone.sync` for use in both
+browser- and server-side environments.
 
 ## License
 
