@@ -784,7 +784,7 @@
   test("#1412 - Trigger 'request' and 'sync' events.", 4, function() {
     var collection = new Boneless.Collection;
     collection.url = '/test';
-    Boneless.ajax = function(settings){ settings.success(); };
+    Boneless.request = function(settings){ settings.success(); };
 
     collection.on('request', function(obj, xhr, options) {
       ok(obj === collection, "collection has correct 'request' event after fetching");
@@ -1149,15 +1149,15 @@
         return data;
       }
     }));
-    var ajax = Boneless.ajax;
-    Boneless.ajax = function (params) {
+    var request = Boneless.request;
+    Boneless.request = function (params) {
       _.defer(params.success);
       return {someHeader: 'headerValue'};
     };
     collection.fetch({
       success: function () { start(); }
     });
-    Boneless.ajax = ajax;
+    Boneless.request = request;
   });
 
   test("`add` only `sort`s when necessary", 2, function () {

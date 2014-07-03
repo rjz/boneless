@@ -1,7 +1,7 @@
 (function() {
 
   var sync = Boneless.sync;
-  var ajax = Boneless.ajax;
+  var request = Boneless.request;
   var emulateHTTP = Boneless.emulateHTTP;
   var emulateJSON = Boneless.emulateJSON;
   var history = window.history;
@@ -15,7 +15,7 @@
     history.pushState = history.replaceState = function(){};
 
     // Capture ajax settings for comparison.
-    Boneless.ajax = function(settings) {
+    Boneless.request = function(settings) {
       env.ajaxSettings = settings;
     };
 
@@ -33,7 +33,7 @@
 
   QUnit.testDone(function() {
     Boneless.sync = sync;
-    Boneless.ajax = ajax;
+    Boneless.request = request;
     Boneless.emulateHTTP = emulateHTTP;
     Boneless.emulateJSON = emulateJSON;
     history.pushState = pushState;

@@ -83,8 +83,8 @@
     Boneless.sync('create', model);
   });
 
-  test("Boneless.ajax", 1, function() {
-    Boneless.ajax = function(settings){
+  test("Boneless.request", 1, function() {
+    Boneless.request = function(settings){
       strictEqual(settings.url, '/test');
     };
     var model = new Boneless.Model();
